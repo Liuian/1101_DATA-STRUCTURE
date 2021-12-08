@@ -1,6 +1,8 @@
 #include <iostream>
 #include <queue>
 #include <stdio.h>
+#include <fstream>
+#include <string>
 using namespace std;
 
 struct node {
@@ -18,7 +20,7 @@ struct node *newNode(int item) {
   return temp;
 }
 
-/*---------------------Insert a node-------------------*/
+/*---------Insert a node for Part1-------------------*/
 struct node *insert(struct node *node, int key) {
 	// Return a new node if the tree is empty
 	if (node == NULL) {
@@ -35,6 +37,22 @@ struct node *insert(struct node *node, int key) {
   return node;
 }
 
+/*------Insert a node for Part2-------------------*/
+struct node *insertPart2(struct node *node, int key) {
+	// Return a new node if the tree is empty
+	if (node == NULL) {
+		//cout << "Number " << key << " is inserted.\n";
+		return newNode(key);
+}
+	// Traverse to the right place and insert the node
+	if (key < node->key)
+		node->left = insertPart2(node->left, key);
+	else if(key > node->key)
+		node->right = insertPart2(node->right, key);
+	//else if(key == node->key)
+		//cout << "Error. Number " << key << " exists." << '\n';
+  return node;
+}
 /*-------------Find the inorder successor(used in deleting a node)--*/
 struct node *minValueNode(struct node *node) {
 	struct node *current = node;
@@ -210,11 +228,31 @@ int main(){
 					cout << '\n';
 					goto BST;
 				case 'R':
+					//clear link list BST
 					break;
 			}
 			break;
-		//case 2:
-			//break;
+		case 2:{
+			//Read all the data we need
+			cout << "Please input the map file:";	
+			string MapFile;
+			cin >> MapFile;
+			ifstream InputFile(MapFile);
+			int num;
+			int NumStore[64];
+			int i = 0;
+			while(InputFile >> num){
+				root = insertPart2(root, num);
+			}
+			cout << "Please input the Meaty's location";
+			int Location;
+			cin >> Location;
+			cout << "Please input the broccoli traps' index(0~9):";
+			int Trap;
+			cin >> Trap;
+
+			break;
+		}
 		case 0:
 			return 0;
 	}
