@@ -149,6 +149,18 @@ void levelorder(struct node *root){
 	}
 }
 
+/*------------freeBST-----------------*/
+void freeBST(struct node *root){
+	if (root != NULL) {
+		// Traverse left
+		freeBST(root->left);
+		// Traverse right
+		freeBST(root->right);
+		// Free root
+		free(root);
+	}
+}
+
 /*------Insert a node for Part2-------------------*/
 struct node *insertPart2(struct node *node, int key) {
 	// Return a new node if the tree is empty
@@ -166,9 +178,8 @@ struct node *insertPart2(struct node *node, int key) {
   return node;
 }
 
-//******????//
 int RecRoud[64];
-int count0 = 0;
+int count0;
 stack<node*> st;
 /*-------------search a node for part2------------------*/
 bool searchPart2(struct node *root, int key){
@@ -176,18 +187,18 @@ bool searchPart2(struct node *root, int key){
 		return false;
 	else if(key < root->key){
 		st.push(root);
-		RecRoud[count0] = key;
+		RecRoud[count0] = root->key;
 		count0 = count0 + 1;
-		return search(root->left, key);
+		return searchPart2(root->left, key);
 	}
 	else if(key > root->key){
 		st.push(root);
-		RecRoud[count0] = key;
+		RecRoud[count0] = root->key;
 		count0 = count0 + 1;
-		return search(root->right, key);
+		return searchPart2(root->right, key);
 	}
 	else if(key == root->key){
-		RecRoud[count0] = key;
+		RecRoud[count0] = root->key;
 		count0 = count0 + 1;
 		return true;
 	}
@@ -196,8 +207,8 @@ bool searchPart2(struct node *root, int key){
 int main(){
 	int tmp0;
 	char tmp1;
-	struct node *root = NULL;
 	while(1){
+	struct node *root = NULL;
 	cout << "(1)Binary searching tree." << '\n';
 	cout << "(2)Finding Meaty." << '\n';
 	cout << "(0)Escape and find the meaty next year." << '\n';
@@ -260,6 +271,7 @@ int main(){
 					goto BST;
 				case 'R':
 					//clear link list BST
+					freeBST(root);
 					break;
 			}
 			break;
@@ -272,12 +284,14 @@ int main(){
 			int num;
 			int NumStore[64];
 			int i = 0;
-			while(InputFile >> num){
-				root = insertPart2(root, num);
-				NumStore[i] = num;
-				i = i + 1;
-			}
+			if(InputFile.is_open()){
+				while(InputFile >> num){
+					root = insertPart2(root, num);
+					NumStore[i] = num;
+					i = i + 1;
+				}
 			cout << "Load file success.\n\n";
+			}
 			
 			cout << "Please input thr sword's location:";
 			int sword;
@@ -305,21 +319,28 @@ int main(){
 			//Find the road to take the sword and find meaty
 			struct node *cur = NULL;
 			cur = root;
+			count0 = 0;
 			searchPart2(root, sword);
 			cur = st.top();
+			//cout << cur->key;
 			st.pop();
 			while(search(cur, meaty) == false){
-				cur = st.top();
-				st.pop();
 				RecRoud[count0] = cur->key;
 				count0 = count0 + 1;
+				cur = st.top();
+				st.pop();
+				//cout << cur->key;
 			}
+			searchPart2(cur, meaty);
 			cout << "Capoo successfully found his favorite meaty<3\n\n";
 			cout << "shortest path to find the meaty : \n";
-			for(int j = 0; j < count0; j++){
+			//cout << count0;
+			for(int j = 0; j < count0 - 1; j++){
 				cout << RecRoud[j] << "->";
 			}
+			cout << RecRoud[count0 - 1];
 			cout << '\n';
+			freeBST(root);
 			break;
 		}
 		case 0:
