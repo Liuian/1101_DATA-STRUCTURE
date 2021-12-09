@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <fstream>
 #include <string>
+#include <cstdio>
+#include <cstdlib>
+#include <stack>
 using namespace std;
 
 struct node {
@@ -37,22 +40,6 @@ struct node *insert(struct node *node, int key) {
   return node;
 }
 
-/*------Insert a node for Part2-------------------*/
-struct node *insertPart2(struct node *node, int key) {
-	// Return a new node if the tree is empty
-	if (node == NULL) {
-		//cout << "Number " << key << " is inserted.\n";
-		return newNode(key);
-}
-	// Traverse to the right place and insert the node
-	if (key < node->key)
-		node->left = insertPart2(node->left, key);
-	else if(key > node->key)
-		node->right = insertPart2(node->right, key);
-	//else if(key == node->key)
-		//cout << "Error. Number " << key << " exists." << '\n';
-  return node;
-}
 /*-------------Find the inorder successor(used in deleting a node)--*/
 struct node *minValueNode(struct node *node) {
 	struct node *current = node;
@@ -162,6 +149,50 @@ void levelorder(struct node *root){
 	}
 }
 
+/*------Insert a node for Part2-------------------*/
+struct node *insertPart2(struct node *node, int key) {
+	// Return a new node if the tree is empty
+	if (node == NULL) {
+		//cout << "Number " << key << " is inserted.\n";
+		return newNode(key);
+}
+	// Traverse to the right place and insert the node
+	if (key < node->key)
+		node->left = insertPart2(node->left, key);
+	else if(key > node->key)
+		node->right = insertPart2(node->right, key);
+	//else if(key == node->key)
+		//cout << "Error. Number " << key << " exists." << '\n';
+  return node;
+}
+
+//******????//
+int RecRoud[64];
+int count0 = 0;
+stack<node*> st;
+/*-------------search a node for part2------------------*/
+bool searchPart2(struct node *root, int key){
+	if(root == NULL)
+		return false;
+	else if(key < root->key){
+		st.push(root);
+		RecRoud[count0] = key;
+		count0 = count0 + 1;
+		return search(root->left, key);
+	}
+	else if(key > root->key){
+		st.push(root);
+		RecRoud[count0] = key;
+		count0 = count0 + 1;
+		return search(root->right, key);
+	}
+	else if(key == root->key){
+		RecRoud[count0] = key;
+		count0 = count0 + 1;
+		return true;
+	}
+}
+
 int main(){
 	int tmp0;
 	char tmp1;
@@ -243,14 +274,52 @@ int main(){
 			int i = 0;
 			while(InputFile >> num){
 				root = insertPart2(root, num);
+				NumStore[i] = num;
+				i = i + 1;
 			}
-			cout << "Please input the Meaty's location";
-			int Location;
-			cin >> Location;
+			cout << "Load file success.\n\n";
+			
+			cout << "Please input thr sword's location:";
+			int sword;
+			cin >> sword;
+			cout << "Please input the Meaty's location:";
+			int meaty;
+			cin >> meaty;
 			cout << "Please input the broccoli traps' index(0~9):";
 			int Trap;
 			cin >> Trap;
-
+			//delete the Trap's node
+			int dividenum;
+			for(int j = 0; j < i; j++){
+				dividenum = NumStore[j];
+				while(dividenum != 0){
+					if(dividenum % 10 == Trap){ 
+						root = deleteNode(root, NumStore[j]);
+						cout << "Number " << NumStore[j] << " is dedeted\n";
+						break;
+					}
+					dividenum = dividenum / 10;
+				}
+			}
+			cout << '\n';
+			//Find the road to take the sword and find meaty
+			struct node *cur = NULL;
+			cur = root;
+			searchPart2(root, sword);
+			cur = st.top();
+			st.pop();
+			while(search(cur, meaty) == false){
+				cur = st.top();
+				st.pop();
+				RecRoud[count0] = cur->key;
+				count0 = count0 + 1;
+			}
+			cout << "Capoo successfully found his favorite meaty<3\n\n";
+			cout << "shortest path to find the meaty : \n";
+			for(int j = 0; j < count0; j++){
+				cout << RecRoud[j] << "->";
+			}
+			cout << '\n';
 			break;
 		}
 		case 0:
