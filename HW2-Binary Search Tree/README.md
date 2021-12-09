@@ -10,12 +10,12 @@ Implement a BST with linked list.
 1. Delete the nodes(traps) first.
 2. Reach two nodes(sword & Meaty) in shortest path and print out the path.
 # procedures :
-Prat1
+## Prat1
 1. create struct node to implement link list BST.
 2. Build insert(), search(), delete(), preorder(), inorder(), ostorder(), levelorder() function to implement these actions.
 3. Design a function free() to free all the nodes in the BST.
 4. use swich: to to do the indicated action. And print the message in proper place.
-# Part2
+## Part2
 1. open input file and load the numbers to create a BST.
 2. Scan the input informations from command line.
 3. Delete the trap's node.
