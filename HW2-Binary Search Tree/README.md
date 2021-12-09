@@ -1,24 +1,21 @@
-Goals:
-
-For part 1
+# Goals:
+## For part 1  
 Implement a BST with linked list.
 1. Insert a node to the BST.
 2. Delete a node from the BST.
 3. Search if a node is exist int the BST or not.
 4. Print the BST in inorder, preorder, postorder, and postorder.
 5. Clear the BST tree.
-
-For part 2
+## For part 2
 1. Delete the nodes(traps) first.
 2. Reach two nodes(sword & Meaty) in shortest path and print out the path.
-
-procedures :
+# procedures :
 Prat1
 1. create struct node to implement link list BST.
 2. Build insert(), search(), delete(), preorder(), inorder(), ostorder(), levelorder() function to implement these actions.
 3. Design a function free() to free all the nodes in the BST.
 4. use swich: to to do the indicated action. And print the message in proper place.
-Part2
+# Part2
 1. open input file and load the numbers to create a BST.
 2. Scan the input informations from command line.
 3. Delete the trap's node.
