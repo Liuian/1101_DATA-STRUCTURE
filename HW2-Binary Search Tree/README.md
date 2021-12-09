@@ -19,8 +19,8 @@ Implement a BST with linked list.
 1. open input file and load the numbers to create a BST.
 2. Scan the input informations from command line.
 3. Delete the trap's node.
-4. Find the road to pick up sword.And then find Meaty.
-  4-1. Record the nodes from root to the sword's node, and put it into a stack. In the mean time, record the node's number into an array.
-  4-2. Search if the first node pop out from node can reach meaty or not. If not, pop uot next node and do it repetly.
-  4-3. Put the node's number into array every time pop out a node from stack.
-  4-4. when the node can reach meaty, record the path into the array.
+4. Find the road to pick up sword.And then find Meaty.  
+  4-1. Record the nodes from root to the sword's node, and put it into a stack. In the mean time, record the node's number into an array.  
+  4-2. Search if the first node pop out from node can reach meaty or not. If not, pop uot next node and do it repetly.  
+  4-3. Put the node's number into array every time pop out a node from stack.  
+  4-4. when the node can reach meaty, record the path into the array.  
