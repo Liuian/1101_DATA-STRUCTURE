@@ -136,6 +136,7 @@ void postorder(struct node *root){
 
 /*-----------level order traversal---------------*/
 void levelorder(struct node *root){
+	//create a queue and put the nodes into it in order
 	queue<node*> q;
 	q.push(root);
 	while(!q.empty()){
@@ -150,6 +151,7 @@ void levelorder(struct node *root){
 }
 
 /*------------freeBST-----------------*/
+//inorder + free(root)
 void freeBST(struct node *root){
 	if (root != NULL) {
 		// Traverse left
@@ -182,6 +184,9 @@ int RecRoud[64];
 int count0;
 stack<node*> st;
 /*-------------search a node for part2------------------*/
+//this function is bascally same with search function
+//only different is to puch the reached node into stack,
+//and put the path into the array
 bool searchPart2(struct node *root, int key){
 	if(root == NULL)
 		return false;
@@ -208,6 +213,7 @@ int main(){
 	int tmp0;
 	char tmp1;
 	while(1){
+	//build a root node for BST tree
 	struct node *root = NULL;
 	cout << "(1)Binary searching tree." << '\n';
 	cout << "(2)Finding Meaty." << '\n';
@@ -223,6 +229,7 @@ int main(){
 			cout << "(R)eturn." << '\n';
 			cin >> tmp1;
 			switch(tmp1){
+				//insert
 				case 'I':
 					int InsVal;
 					cout << "Enter Numbers : ";
@@ -231,7 +238,8 @@ int main(){
 						root = insert(root, InsVal);
 						cin >> InsVal;
 					}
-					goto BST;
+					goto BST;	//use same BST to do other functions
+				//search
 				case 'S':
 					int SarVal;
 					cout << "Enter elements to searching : ";
@@ -244,6 +252,7 @@ int main(){
 						cin >> SarVal;
 					}
 					goto BST;
+				//delete
 				case 'D':
 					int DelVal;
 					cout << "Enter numbers to delete : ";
@@ -258,6 +267,7 @@ int main(){
 						cin >> DelVal;
 					}
 					goto BST;
+				//print
 				case 'P':
 					cout << "The tree in prefix order : ";
 					preorder(root);
@@ -269,6 +279,7 @@ int main(){
 					levelorder(root);
 					cout << '\n';
 					goto BST;
+				//restart
 				case 'R':
 					//clear link list BST
 					freeBST(root);
@@ -284,6 +295,7 @@ int main(){
 			int num;
 			int NumStore[64];
 			int i = 0;
+	struct node *root = NULL;
 			if(InputFile.is_open()){
 				while(InputFile >> num){
 					root = insertPart2(root, num);
@@ -293,7 +305,7 @@ int main(){
 			cout << "Load file success.\n\n";
 			}
 			
-			cout << "Please input thr sword's location:";
+			cout << "Please input the sword's location:";
 			int sword;
 			cin >> sword;
 			cout << "Please input the Meaty's location:";
