@@ -26,13 +26,13 @@ Implement a BST with linked list.
   4-4. when the node can reach meaty, record the path into the array.  
 # execute result
 ## part1
-1. Insert a node to the BST.
+1. Insert a node to the BST.  
 <img width="412" alt="image" src="https://user-images.githubusercontent.com/70461575/145405219-d207a6fe-f19f-4ab1-b4b5-ff81f33e2f2c.png">
-2. Delete a node from the BST.
+2. Delete a node from the BST.  
 <img width="413" alt="image" src="https://user-images.githubusercontent.com/70461575/145405272-fedcf34a-b9b2-4b2a-83b4-170800c936af.png">
-3. Search if a node is exist int the BST or not.
+3. Search if a node is exist int the BST or not.  
 <img width="378" alt="image" src="https://user-images.githubusercontent.com/70461575/145405335-a7311f01-3f41-4aa2-a91b-160eb45148e6.png">
-4. Print the BST in inorder, preorder, postorder, and postorder.
+4. Print the BST in inorder, preorder, postorder, and postorder.  
 <img width="275.5" alt="image" src="https://user-images.githubusercontent.com/70461575/145405388-3d33ab89-0293-4d30-8e35-f70deb047c41.png">  
-## Part2
+## Part2  
 <img width="408" alt="image" src="https://user-images.githubusercontent.com/70461575/145405755-7b4b2317-0803-4210-8376-b2bb16e964d5.png">
