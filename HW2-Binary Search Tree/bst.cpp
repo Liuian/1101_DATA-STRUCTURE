@@ -8,6 +8,7 @@
 #include <stack>
 using namespace std;
 
+/*create a 'struct node' to form  a node.*/
 struct node {
   int key;
   struct node *left, *right;
@@ -15,7 +16,9 @@ struct node {
 
 int RecordDel = 0;
 
-/*------------Create a node----------------*/
+/*------------Create a node-------------------------------------------*/
+/*use malloc function to create a node--------------------------------*/
+/*put the value into node->key and set node->left, node->right as NULL*/
 struct node *newNode(int item) {
   struct node *temp = (struct node *)malloc(sizeof(struct node));
   temp->key = item;
@@ -23,7 +26,11 @@ struct node *newNode(int item) {
   return temp;
 }
 
-/*---------Insert a node for Part1-------------------*/
+/*-------------------Insert a node for Part1---------------------------------------*/
+/*1. check if root->key is NULL or not. if root->key is NULL, put the value into it*/
+/*2. if not, put the key into correct place----------------------------------------*/
+/*3. if we found that there is a same key in the tree, output 'Error'--------------*/
+/*4. do 1,2,3 recruservely---------------------------------------------------------*/
 struct node *insert(struct node *node, int key) {
 	// Return a new node if the tree is empty
 	if (node == NULL) {
@@ -41,6 +48,7 @@ struct node *insert(struct node *node, int key) {
 }
 
 /*-------------Find the inorder successor(used in deleting a node)--*/
+/*find the node right subtree's smallest node(leftmost node)--------*/
 struct node *minValueNode(struct node *node) {
 	struct node *current = node;
 	//Find the leftmost leaf
@@ -49,7 +57,10 @@ struct node *minValueNode(struct node *node) {
 	return current;
 }
 
-/*--------------Deleting a node-------------------*/
+/*--------------Deleting a node-------------------------------------*/
+/*1. find the node we want to delete first--------------------------*/
+/*2. figure out that node have zero, one or two childern(s)---------*/
+/*3. do the correspond action depand on how many children(s) it have*/
 struct node *deleteNode(struct node *root, int key) {
 	// Return if the tree is empty
 	if (root == NULL) return root;
@@ -98,7 +109,9 @@ bool search(struct node *root, int key){
 		return true;
 }
 
-/*-------------preorder traversal--------------*/
+/*-------------preorder traversal--------------------------------*/
+/*output node->key first and then treverse left and right subtree*/
+/*search left and right subtree recruservly----------------------*/
 void preorder(struct node *root){
 	if(root != NULL){
 		// Traverse root
@@ -111,6 +124,7 @@ void preorder(struct node *root){
 }
 
 /*--------------Inorder Traversal--------------*/
+/*same logic with preorder traversal-----------*/
 void inorder(struct node *root){
 	if (root != NULL) {
 		// Traverse left
@@ -123,6 +137,7 @@ void inorder(struct node *root){
 }
 
 /*------------postorder traversal-----------------*/
+/*same logic with preorder traversal-----------*/
 void postorder(struct node *root){
 	if (root != NULL) {
 		// Traverse left
@@ -134,7 +149,9 @@ void postorder(struct node *root){
 	}
 }
 
-/*-----------level order traversal---------------*/
+/*-----------level order traversal--------------------------------------------*/
+/*put the outputed node's subtree into the queue------------------------------*/
+/*pop out one node from queue, print the key and do these two step recursively*/
 void levelorder(struct node *root){
 	//create a queue and put the nodes into it in order
 	queue<node*> q;
@@ -150,8 +167,8 @@ void levelorder(struct node *root){
 	}
 }
 
-/*------------freeBST-----------------*/
-//inorder + free(root)
+/*------------freeBST-------------------*/
+//search the tree inorder and free(root)*/
 void freeBST(struct node *root){
 	if (root != NULL) {
 		// Traverse left
@@ -184,9 +201,9 @@ int RecRoud[64];
 int count0;
 stack<node*> st;
 /*-------------search a node for part2------------------*/
-//this function is bascally same with search function
-//only different is to puch the reached node into stack,
-//and put the path into the array
+/*this function is bascally same with search function---*/
+/*only different is to puch the reached node into stack,*/
+/*and put the path into the array-----------------------*/
 bool searchPart2(struct node *root, int key){
 	if(root == NULL)
 		return false;
@@ -210,11 +227,10 @@ bool searchPart2(struct node *root, int key){
 }
 
 int main(){
-	int tmp0;
-	char tmp1;
+	int tmp0;	//record main menu's input number
+	char tmp1;	//record BST action menu's input number
 	while(1){
-	//build a root node for BST tree
-	struct node *root = NULL;
+	struct node *root = NULL;	//build a root node for BST tree
 	cout << "(1)Binary searching tree." << '\n';
 	cout << "(2)Finding Meaty." << '\n';
 	cout << "(0)Escape and find the meaty next year." << '\n';
@@ -230,21 +246,21 @@ int main(){
 			cin >> tmp1;
 			switch(tmp1){
 				//insert
-				case 'I':
+				case 'i':
 					int InsVal;
 					cout << "Enter Numbers : ";
 					cin >> InsVal;
-					while(InsVal != -1){
+					while(InsVal != -1){	//do insert function till the input number is -1
 						root = insert(root, InsVal);
 						cin >> InsVal;
 					}
 					goto BST;	//use same BST to do other functions
 				//search
-				case 'S':
+				case 's':
 					int SarVal;
 					cout << "Enter elements to searching : ";
 					cin >> SarVal;
-					while(SarVal != -1){
+					while(SarVal != -1){	//do insert function till the input number is -1
 						if(search(root, SarVal) ==true)
 							cout << "Bingo! " << SarVal << " is found.\n";
 						else
@@ -253,11 +269,11 @@ int main(){
 					}
 					goto BST;
 				//delete
-				case 'D':
+				case 'd':
 					int DelVal;
 					cout << "Enter numbers to delete : ";
 					cin >> DelVal;
-					while(DelVal != -1){
+					while(DelVal != -1){	//do insert function till the input number is -1
 						RecordDel = 1;
 						root = deleteNode(root, DelVal);
 						if(RecordDel == 0)
@@ -268,7 +284,7 @@ int main(){
 					}
 					goto BST;
 				//print
-				case 'P':
+				case 'p':
 					cout << "The tree in prefix order : ";
 					preorder(root);
 					cout << "\nThe tree in infix order : ";
@@ -280,14 +296,14 @@ int main(){
 					cout << '\n';
 					goto BST;
 				//restart
-				case 'R':
-					//clear link list BST
-					freeBST(root);
+				case 'r':
+					freeBST(root);	//clear link list BST
 					break;
 			}
 			break;
 		case 2:{
-			//Read all the data we need
+			/*Read all the data we need--*/
+			/*and read the input file----*/
 			cout << "Please input the map file:";	
 			string MapFile;
 			cin >> MapFile;
@@ -304,7 +320,6 @@ int main(){
 				}
 			cout << "Load file success.\n\n";
 			}
-			
 			cout << "Please input the sword's location:";
 			int sword;
 			cin >> sword;
@@ -314,7 +329,7 @@ int main(){
 			cout << "Please input the broccoli traps' index(0~9):";
 			int Trap;
 			cin >> Trap;
-			//delete the Trap's node
+			/*delete the Trap's node*/
 			int dividenum;
 			for(int j = 0; j < i; j++){
 				dividenum = NumStore[j];
@@ -328,25 +343,28 @@ int main(){
 				}
 			}
 			cout << '\n';
-			//Find the road to take the sword and find meaty
+			/*Find the road to take the sword and find meaty-------------------*/
+			/*when capoo go to take the sword----------------------------------*/
+			/*, record the road in the stack and array-------------------------*/
+			/*when capoo want to go to meaty's node from sword's node----------*/
+			/*, pop out the node in order -------------------------------------*/
+			/*and find if that node can reach the meaty's node-----------------*/
+			/*if that node can reach meaty's node, record the node in the array*/
 			struct node *cur = NULL;
 			cur = root;
 			count0 = 0;
 			searchPart2(root, sword);
 			cur = st.top();
-			//cout << cur->key;
 			st.pop();
 			while(search(cur, meaty) == false){
 				RecRoud[count0] = cur->key;
 				count0 = count0 + 1;
 				cur = st.top();
 				st.pop();
-				//cout << cur->key;
 			}
 			searchPart2(cur, meaty);
 			cout << "Capoo successfully found his favorite meaty<3\n\n";
 			cout << "shortest path to find the meaty : \n";
-			//cout << count0;
 			for(int j = 0; j < count0 - 1; j++){
 				cout << RecRoud[j] << "->";
 			}
