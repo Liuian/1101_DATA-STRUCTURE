@@ -155,10 +155,7 @@ void postorder(struct node *root){
 void levelorder(struct node *root){
 	//create a queue and put the nodes into it in order
 	queue<node*> q;
-	//if the tree is NULL, don't do q.push()
-	if(root != NULL){
-		q.push(root);
-	}
+	q.push(root);
 	while(!q.empty()){
 		root = q.front();
 		q.pop();
@@ -199,25 +196,6 @@ struct node *insertPart2(struct node *node, int key) {
 		//cout << "Error. Number " << key << " exists." << '\n';
   return node;
 }
-
-int NumStore[64];
-int CountNum;
-/*------------postorder traversal-----------------*/
-/*same logic with preorder traversal-----------*/
-void postorderPart2(struct node *root){
-	if (root != NULL) {
-		// Traverse left
-		postorderPart2(root->left);
-		// Traverse right
-		postorderPart2(root->right);
-		// Traverse root
-		//cout << root->key << " ";
-		//cout << "test";
-		NumStore[CountNum] = root->key;
-		CountNum = CountNum + 1;
-	}
-}
-
 
 int RecRoud[64];
 int count0;
@@ -324,7 +302,6 @@ int main(){
 			}
 			break;
 		case 2:{
-			CountNum = 0;
 			/*Read all the data we need--*/
 			/*and read the input file----*/
 			cout << "Please input the map file:";	
@@ -332,14 +309,14 @@ int main(){
 			cin >> MapFile;
 			ifstream InputFile(MapFile);
 			int num;
-			//int NumStore[64];
-			//int i = 0;
-			struct node *root = NULL;
+			int NumStore[64];
+			int i = 0;
+	struct node *root = NULL;
 			if(InputFile.is_open()){
 				while(InputFile >> num){
 					root = insertPart2(root, num);
-					//NumStore[i] = num;
-					//i = i + 1;
+					NumStore[i] = num;
+					i = i + 1;
 				}
 			cout << "Load file success.\n\n";
 			}
@@ -352,15 +329,9 @@ int main(){
 			cout << "Please input the broccoli traps' index(0~9):";
 			int Trap;
 			cin >> Trap;
-			//cout << "postorderpart2\n";
-			/*record postorder node's key into an array*/
-			postorderPart2(root);
 			/*delete the Trap's node*/
 			int dividenum;
-			//cout << "\nCountNum" << CountNum;
-			for(int j = 0; j < CountNum; j++){
-				//cout << "\ntest";
-				//cout << NumStore[j] << '\n';
+			for(int j = 0; j < i; j++){
 				dividenum = NumStore[j];
 				while(dividenum != 0){
 					if(dividenum % 10 == Trap){ 
