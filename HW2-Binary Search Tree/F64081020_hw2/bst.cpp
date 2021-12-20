@@ -200,7 +200,7 @@ struct node *insertPart2(struct node *node, int key) {
   return node;
 }
 
-int NumStore[64];
+int NumStore[4096];
 int CountNum;
 /*------------postorder traversal-----------------*/
 /*same logic with preorder traversal-----------*/
@@ -219,7 +219,7 @@ void postorderPart2(struct node *root){
 }
 
 
-int RecRoud[64];
+int RecRoud[4096];
 int count0;
 stack<node*> st;
 /*-------------search a node for part2------------------*/
@@ -332,14 +332,10 @@ int main(){
 			cin >> MapFile;
 			ifstream InputFile(MapFile);
 			int num;
-			//int NumStore[64];
-			//int i = 0;
 			struct node *root = NULL;
 			if(InputFile.is_open()){
 				while(InputFile >> num){
 					root = insertPart2(root, num);
-					//NumStore[i] = num;
-					//i = i + 1;
 				}
 			cout << "Load file success.\n\n";
 			}
@@ -352,15 +348,12 @@ int main(){
 			cout << "Please input the broccoli traps' index(0~9):";
 			int Trap;
 			cin >> Trap;
-			//cout << "postorderpart2\n";
 			/*record postorder node's key into an array*/
 			postorderPart2(root);
 			/*delete the Trap's node*/
 			int dividenum;
 			//cout << "\nCountNum" << CountNum;
 			for(int j = 0; j < CountNum; j++){
-				//cout << "\ntest";
-				//cout << NumStore[j] << '\n';
 				dividenum = NumStore[j];
 				while(dividenum != 0){
 					if(dividenum % 10 == Trap){ 
