@@ -2,8 +2,11 @@
 #include <stdio.h>
 #include <fstream>
 #include <string>
-
 using namespace std;
+
+//string output;
+//ofstream OutputFile(output);
+//fstream OutputFile;
 
 /* A binary tree node has data, pointer to left child and a pointer to right child */
 class node{
@@ -74,28 +77,35 @@ node* buildTreePost(int in[], int post[], int inStrt, int inEnd){
 	return tNode;
 }
 
+fstream OutputFile;
+//void printPostorder(node* node);
+//void printPreorder(node* node);
 /* This function is here just to test buildTree() */
-void printPostorder(node* node){
+void printPostorder(node* node, string output){
     if (node == NULL)
         return;
     /* first recur on left child */
-    printPostorder(node->left);
+    printPostorder(node->left, output);
     /* now recur on right child */
-    printPostorder(node->right);
+    printPostorder(node->right, output);
     /* then print the data of node */
-    cout<< node->data <<" ";
+	OutputFile.open(output, ios::app);
+	OutputFile << node->data <<" ";
+	OutputFile.close();
+    //cout<< node->data <<" ";
 }
-
 /* This function is here just to test buildTree() */
-void printPreorder(node* node){
+void printPreorder(node* node, string output){
     if (node == NULL)
         return;
-    /* then print the data of node */
-    cout<< node->data <<" ";
+	OutputFile.open(output, ios::app);
+	OutputFile << node->data <<" ";
+	OutputFile.close();
+    //cout<< node->data <<" ";
     /* first recur on left child */
-    printPreorder(node->left);
+    printPreorder(node->left, output);
     /* now recur on right child */
-    printPreorder(node->right);
+    printPreorder(node->right, output);
 }
 
 int main(){
@@ -105,6 +115,14 @@ int main(){
 	ifstream InputFile(input);
 	if(!InputFile.is_open()) 
 		cout << "fild open fail";
+	//create output file
+	string output = "out";
+	int length = input.length();
+	output.append(input, 2, length - 2);
+	OutputFile.open(output, ios::out);
+	OutputFile.close();
+	//ofstream OutputFile(output);
+	//begin to do the operation
 	int round;
 	InputFile >> round;
 	for(int i = 0; i < round; i++){
@@ -124,15 +142,25 @@ int main(){
 		if(str == "preorder-inorder"){
 			preIndex = 0;
 			root = buildTreePre(second, first, 0, NodeCount - 1);
-			printPostorder(root);
-			cout << '\n';
+			printPostorder(root, output);
+			OutputFile.open(output, ios::app);
+			OutputFile << '\n';
+			OutputFile.close();
+			//cout << '\n';
+			//OutputFile << '\n';
 		}
 		if(str == "postorder-inorder"){
 			postIndex = NodeCount - 1;
 			root = buildTreePost(second, first, 0, NodeCount - 1);
-			printPreorder(root);
-			cout << '\n';
+			printPreorder(root, output);
+			OutputFile.open(output, ios::app);
+			OutputFile << '\n';
+			OutputFile.close();
+			//OutputFile << '\n';
+			//cout << '\n';
 		}
 	}
 	return 0;
 }
+//string output;
+//fstream OutputFile;

@@ -10,20 +10,18 @@ int numOfVertex;
 fstream OutputFile;
 
 void bfs(int startVertex, int *adjMatrix[numOfVertex], int visited[numOfVertex], string output){
-	//cout << startVertex << " ";
-	//visited[startVertex] = 1;
 	for(int i = 0; i < numOfVertex; i++){
-		if(adjMatrix[startVertex][i] == 1 && visited[i] == 0){
+		if(adjMatrix[startVertex][i] != 0 && visited[i] == -1){
 			q.push(i);
-			visited[i] = 1;
+			visited[i] = visited[startVertex] + adjMatrix[startVertex][i];
 		}
-			//bfs(i, adjMatrix, visited);
 	}
 	if(!q.empty()){
-		OutputFile.open(output, ios::app);
-		OutputFile << q.front() <<" ";
-		OutputFile.close();
-		//cout << q.front() << " ";
+		//write the result into the outputfile
+		//OutputFile.open(output, ios::app);
+		//OutputFile << q.front() <<" ";
+		//OutputFile.close();
+		//------------------------------------
 		q.pop();
 		bfs(q.front(), adjMatrix, visited, output);
 	}
@@ -42,31 +40,43 @@ int main(){
 	output.append(input, 2, length - 2);
 	OutputFile.open(output, ios::out);
 	OutputFile.close();
+	//-------------------------
 
-	int round;
-	InputFile >> round;
-	for(int i = 0; i < round; i++){
-		int startVertex;
 		InputFile >> numOfVertex;
-		InputFile >> startVertex;
+		//create the adjMatrix
 		int *adjMatrix[numOfVertex];
 		for(int i = 0; i < numOfVertex; i++){
 			adjMatrix[i] = new int[numOfVertex];
 		}
-		int visited[numOfVertex];
+		//--------------------
+		int pathLength[numOfVertex];
 		for(int j = 0; j < numOfVertex; j++){
 			for(int k = 0; k < numOfVertex; k++){
-				InputFile >> adjMatrix[j][k];
+				adjMatrix[j][k] = 0;
 			}
-			visited[j] = 0;
+			pathLength[j] = -1;
 		}
+		int start;
+		int end;
+		int weight;
+		for(int i = 0; i < numOfVertex - 1; i++){
+			InputFile >> start;
+			InputFile >> end;
+			InputFile >> weight;
+			adjMatrix[start - 1][end - 1] = weight;
+			adjMatrix[end - 1][start - 1] = weight;
+		}
+		int startVertex;
+		InputFile >> startVertex;
 		q.push(startVertex);
-		visited[startVertex] = 1;
-		bfs(startVertex, adjMatrix, visited, output);
+		pathLength[startVertex - 1] = 0;
+		bfs(startVertex - 1, adjMatrix, pathLength, output);
+		//write the result into the output file
+	for(int i = 0; i < numOfVertex; i++){
 		OutputFile.open(output, ios::app);
-		OutputFile << '\n';
+		OutputFile << i + 1 << " " << pathLength[i] << '\n';
 		OutputFile.close();
-		//cout << '\n';
 	}
+		//-------------------------------------
 	return 0;
 }

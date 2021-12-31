@@ -4,24 +4,28 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-using namespace std;
 
 #define edge pair<int, int>
 
+using namespace std;
+fstream OutputFile;
+
 class Graph {
-   private:
+   //private:
+   public:
   vector<pair<int, edge> > G;  // graph
   vector<pair<int, edge> > T;  // mst
   int *parent;
   int V;  // number of vertices/nodes in graph
-   public:
+   //public:
   Graph(int V);
   void AddWeightedEdge(int u, int v, int w);
   int find_set(int i);
   void union_set(int u, int v);
   void kruskal();
-  void print();
+  void print(string output);
 };
+
 Graph::Graph(int V) {
   parent = new int[V];
 
@@ -33,6 +37,7 @@ Graph::Graph(int V) {
   G.clear();
   T.clear();
 }
+
 void Graph::AddWeightedEdge(int u, int v, int w) {
   G.push_back(make_pair(w, edge(u, v)));
 }
@@ -50,6 +55,7 @@ int Graph::find_set(int i) {
 void Graph::union_set(int u, int v) {
   parent[u] = parent[v];
 }
+
 void Graph::kruskal() {
   int i, uRep, vRep;
   sort(G.begin(), G.end());  // increasing weight
@@ -62,7 +68,8 @@ void Graph::kruskal() {
     }
   }
 }
-void Graph::print() {
+
+void Graph::print(string output) {
   //cout << "Edge :"
   //   << " Weight" << endl;
   int sum = 0;
@@ -72,8 +79,12 @@ void Graph::print() {
 	sum = sum + T[i].first;
     //cout << endl;
   }
-  cout << sum << '\n';
+	//cout << sum << '\n';
+	OutputFile.open(output, ios::app);
+	OutputFile << sum  <<" ";
+	OutputFile.close();
 }
+
 int main() {
 	cout << "please type input file's name : ";
 	string input;
@@ -81,6 +92,13 @@ int main() {
 	ifstream InputFile(input);
 	if(!InputFile.is_open())
 		cout << "fild open fail";
+	//create output file
+	string output = "out";
+	int length = input.length();
+	output.append(input, 2, length - 2);
+	OutputFile.open(output, ios::out);
+	OutputFile.close();
+
 	int v;
 	int e;
 	InputFile >> v >> e;
@@ -93,6 +111,6 @@ int main() {
 		g.AddWeightedEdge(start, end, weight);
 	}
   g.kruskal();
-  g.print();
+  g.print(output);
   return 0;
 }
