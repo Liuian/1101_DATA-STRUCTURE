@@ -55,3 +55,37 @@ create
 precedure  
 1. open the input file and read all the data.  
 2. do BFS, if this vertex connect to another never visited vertex, add the weight into recorded weight.  
+# execution results
+## 3-1
+output.txt  
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/70461575/147930760-cb9a0a1e-dce7-4af7-b7a9-610d49fd17b7.png">  
+output_01.txt  
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/70461575/147930806-dd0d93e1-5e3f-4f7f-9b7c-bf93ff083e4a.png">  
+output_02.txt  
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/70461575/147930828-9b84cdfc-72a9-46f3-8fea-7ff7ab99502d.png">  
+## 3-2  
+output.txt  
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/70461575/147930904-39973639-f296-4754-968f-0d1187065565.png">  
+output_01.txt  
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/70461575/147930983-dc7ee666-c549-4fc4-9033-76d852548cfa.png">
+## 3-3
+output.txt  
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/70461575/147931082-ad97e2d7-3e35-4a73-bc77-37ad0470ef76.png">  
+output_01.txt 
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/70461575/147931100-86e2df22-1350-4f40-ae80-0538335b17b1.png">  
+## 3-4
+output.txt  
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/70461575/147931189-8c8d3fc7-5d40-4f70-870e-c20194f9370b.png">
+output_01.txt  
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/70461575/147931216-df76fcc2-3881-427f-8b64-234311e8f4be.png">
+output_02.txt  
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/70461575/147931249-95826488-32a1-484a-8fa4-01dd2400aefb.png">
+
+## 3-5  
+output.txt  
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/70461575/147931341-4663d766-1c8d-4c49-a030-4ce6c66355a0.png">  
+output_01.txt  
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/70461575/147931364-0c6918f6-62b6-4287-a33d-de88a619fd08.png">
+output_02.txt 
+output.txt  
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/70461575/147931383-0921a4d0-1831-49e2-93ab-d392b0eb5180.png">
