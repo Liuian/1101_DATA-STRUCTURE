@@ -56,31 +56,24 @@ node* buildTreePre(int in[], int pre[], int inStrt, int inEnd){
 /* Recursive function to construct binary of size len from Inorder traversal in[] and Preorder traversal pre[]. Initial values of inStrt and inEnd should be 0 and len -1. The function doesn't do any error checking for cases where inorder and preorder do not form a tree */
 int postIndex;
 node* buildTreePost(int in[], int post[], int inStrt, int inEnd){
-    
 	if (inStrt > inEnd)
         return NULL;
-    
 	/* Pick current node from Preorder traversal using preIndex and increment preIndex */
     node* tNode = newNode(post[postIndex--]);
-    
 	/* If this node has no children then return */
     if (inStrt == inEnd)
         return tNode;
-    
 	/* Else find the index of this node in Inorder traversal */
     int inIndex = search(in, inStrt, inEnd, tNode->data);
-    
 	/* Using index in Inorder traversal, construct left and right subtress */
     tNode->right = buildTreePost(in, post, inIndex + 1, inEnd);
     tNode->left = buildTreePost(in, post, inStrt, inIndex - 1);
-    
 	return tNode;
 }
 
 fstream OutputFile;
-//void printPostorder(node* node);
-//void printPreorder(node* node);
 /* This function is here just to test buildTree() */
+//print the tree in post order
 void printPostorder(node* node, string output){
     if (node == NULL)
         return;
@@ -92,16 +85,16 @@ void printPostorder(node* node, string output){
 	OutputFile.open(output, ios::app);
 	OutputFile << node->data <<" ";
 	OutputFile.close();
-    //cout<< node->data <<" ";
 }
+
 /* This function is here just to test buildTree() */
+//print the tree in pre order
 void printPreorder(node* node, string output){
     if (node == NULL)
         return;
 	OutputFile.open(output, ios::app);
 	OutputFile << node->data <<" ";
 	OutputFile.close();
-    //cout<< node->data <<" ";
     /* first recur on left child */
     printPreorder(node->left, output);
     /* now recur on right child */
@@ -109,6 +102,7 @@ void printPreorder(node* node, string output){
 }
 
 int main(){
+	//open the indicated file from the command line
 	cout << "please type input file's name : ";
 	string input;
 	cin >> input;
@@ -121,8 +115,7 @@ int main(){
 	output.append(input, 2, length - 2);
 	OutputFile.open(output, ios::out);
 	OutputFile.close();
-	//ofstream OutputFile(output);
-	//begin to do the operation
+	//begin to read the data from the input file
 	int round;
 	InputFile >> round;
 	for(int i = 0; i < round; i++){
@@ -139,9 +132,12 @@ int main(){
 			InputFile >> second[k];
 		}
 		node* root = NULL;
+		//judge the input file is what kind of file
 		if(str == "preorder-inorder"){
 			preIndex = 0;
+			//build the binary tree
 			root = buildTreePre(second, first, 0, NodeCount - 1);
+			//print the tree in post - order
 			printPostorder(root, output);
 			OutputFile.open(output, ios::app);
 			OutputFile << '\n';
@@ -151,7 +147,9 @@ int main(){
 		}
 		if(str == "postorder-inorder"){
 			postIndex = NodeCount - 1;
+			//build the binary tree
 			root = buildTreePost(second, first, 0, NodeCount - 1);
+			//print the tree in pre - order
 			printPreorder(root, output);
 			OutputFile.open(output, ios::app);
 			OutputFile << '\n';
@@ -162,5 +160,3 @@ int main(){
 	}
 	return 0;
 }
-//string output;
-//fstream OutputFile;

@@ -10,14 +10,12 @@
 using namespace std;
 fstream OutputFile;
 
-class Graph {
-   //private:
-   public:
+class Graph{
+  public:
   vector<pair<int, edge> > G;  // graph
   vector<pair<int, edge> > T;  // mst
   int *parent;
   int V;  // number of vertices/nodes in graph
-   //public:
   Graph(int V);
   void AddWeightedEdge(int u, int v, int w);
   int find_set(int i);
@@ -26,22 +24,20 @@ class Graph {
   void print(string output);
 };
 
-Graph::Graph(int V) {
+//cerare the functions that we needed
+Graph::Graph(int V){
   parent = new int[V];
-
-  //i 0 1 2 3 4 5
-  //parent[i] 0 1 2 3 4 5
   for (int i = 0; i < V; i++)
     parent[i] = i;
-
   G.clear();
   T.clear();
 }
 
-void Graph::AddWeightedEdge(int u, int v, int w) {
+void Graph::AddWeightedEdge(int u, int v, int w){
   G.push_back(make_pair(w, edge(u, v)));
 }
-int Graph::find_set(int i) {
+
+int Graph::find_set(int i){
   // If i is the parent of itself
   if (i == parent[i])
     return i;
@@ -52,40 +48,36 @@ int Graph::find_set(int i) {
     return find_set(parent[i]);
 }
 
-void Graph::union_set(int u, int v) {
+void Graph::union_set(int u, int v){
   parent[u] = parent[v];
 }
 
-void Graph::kruskal() {
+void Graph::kruskal(){
   int i, uRep, vRep;
   sort(G.begin(), G.end());  // increasing weight
   for (i = 0; i < G.size(); i++) {
     uRep = find_set(G[i].second.first);
     vRep = find_set(G[i].second.second);
-    if (uRep != vRep) {
-      T.push_back(G[i]);  // add to tree
-      union_set(uRep, vRep);
+    if (uRep != vRep) {	//check weather it will gengrate a cycle or not when the edge selected
+      T.push_back(G[i]);  // if not, add to tree
+      union_set(uRep, vRep);	//mark the end as the 
     }
   }
 }
 
-void Graph::print(string output) {
-  //cout << "Edge :"
-  //   << " Weight" << endl;
+//add all the selected edgs weight and print
+void Graph::print(string output){
   int sum = 0;
   for (int i = 0; i < T.size(); i++) {
-    //cout << T[i].second.first << " - " << T[i].second.second << " : "
-       //<< T[i].first;
 	sum = sum + T[i].first;
-    //cout << endl;
   }
-	//cout << sum << '\n';
 	OutputFile.open(output, ios::app);
 	OutputFile << sum  <<" ";
 	OutputFile.close();
 }
 
-int main() {
+int main(){
+	//open the indicated file
 	cout << "please type input file's name : ";
 	string input;
 	cin >> input;
@@ -98,11 +90,11 @@ int main() {
 	output.append(input, 2, length - 2);
 	OutputFile.open(output, ios::out);
 	OutputFile.close();
-
 	int v;
 	int e;
 	InputFile >> v >> e;
 	Graph g(v);
+	//build the graph
 	for(int i = 0; i < e; i++){
 		int start;
 		int end;
@@ -110,7 +102,9 @@ int main() {
 		InputFile >> start >> end >> weight;
 		g.AddWeightedEdge(start, end, weight);
 	}
+  //do kruskl algorithm
   g.kruskal();
+  //print the result
   g.print(output);
   return 0;
 }
